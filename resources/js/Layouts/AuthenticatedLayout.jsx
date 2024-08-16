@@ -1,125 +1,212 @@
-import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import Sidebar from "../components/Sidebar/Sidebar";
+import DashboardHeader from "../components/DashboardHeader/DashboardHeader";
+import { ArrowRightCircleIcon, CheckBadgeIcon, CreditCardIcon, CurrencyDollarIcon, DocumentDuplicateIcon, ExclamationCircleIcon, HomeIcon, UserCircleIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays, faCashRegister, faChartArea, faCube, faEnvelope, faHeadphones, faHeart, faHome, faHomeAlt, faMoneyCheckDollar, faNewspaper, faSpinner, faStar, faUpload, faUser, faUserAlt, faUserCheck, faUserDoctor, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { UserProvider, useUser } from "../lib/user";
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
+import { useMutation, useQuery } from "react-query";
+import { api } from "../lib/axios";
+import { initiatePayment, verifyPayment } from "../lib/payment";
+
+
+const navigation = [
+    { 
+      name: 'Overview', 
+      href: '/dashboard', 
+      icon:  <FontAwesomeIcon icon={faHomeAlt}/>, current: true 
+    },
+    { 
+      name: 'Members', 
+      href: '/dashboard/members', 
+      icon:  <FontAwesomeIcon icon={faUserGroup}/>, current: true 
+    },
+    { 
+      name: 'Payments', 
+      href: '/dashboard/dues', 
+      icon:  <FontAwesomeIcon icon={faMoneyCheckDollar}/>, current: true 
+    },
+    // { 
+    //   name: 'Election', 
+    //   href: '/dashboard/election', 
+    //   icon:  <FontAwesomeIcon icon={faUserCheck}/>, current: true 
+    // },
+    { 
+      name: 'Events', 
+      href: '/dashboard/events', 
+      icon:  <FontAwesomeIcon icon={faCalendarDays}/>, current: true 
+    },
+    { 
+      name: 'News and Updates', 
+      href: '/dashboard/news', 
+      icon:  <FontAwesomeIcon icon={faNewspaper}/>, current: true 
+    },
+    { 
+      name: 'Job Board', 
+      href: '/dashboard/job-board', 
+      icon:  <FontAwesomeIcon icon={faUserDoctor}/>, current: true 
+    },
+  ]
+  
+  const userNavigation = [
+    { 
+      name: 'Profile', 
+      icon:  <FontAwesomeIcon icon={faUserAlt}/>,
+      href: '/dashboard/profile' 
+    },
+    { 
+      name: 'Back Home', 
+      icon:  <FontAwesomeIcon icon={faHome}/>,
+      href: '/' 
+    },
+  ]
+  
+//   function MyModal() {
+//     const { token } = useUser();
+//     const url = typeof window !== 'undefined' && window.location.href;
+  
+//     const { query : { reference } } = useRouter();
+  
+//     const initiate = useMutation(async (data) => await initiatePayment(data, token), { onSuccess : ({authorization_url}) => window.location.href = authorization_url });
+  
+//     const verify = useQuery(['verify_due'], async () => await verifyPayment(token, reference), { enabled : ( token !== null && reference !== undefined )});
+   
+//     let [isOpen, setIsOpen] = useState(false);
+  
+//     const body = {
+//       amount : 1500,
+//       purpose : "registration fee",
+//       callback_url : url,
+//       payment_id : "sjssaa"
+//     }
+    
+//     const status = useQuery(['due_status'], async () => {
+//       const {data} = await api.get("/due-status" , { headers : { Authorization : `Bearer ${token}`} } )
+    
+//       return data;
+//     }, { enabled : (token !== null), onSuccess : (data) => !data && setIsOpen(false), retry : 0 });
+  
+//     function closeModal() {
+//       setIsOpen(true)
+//     }
+  
+//     return (
+//       <>
+//         <Transition appear show={isOpen} as={Fragment}>
+//           <Dialog as="div" className="relative z-10" onClose={closeModal}>
+//             <Transition.Child
+//               as={Fragment}
+//               enter="ease-out duration-300"
+//               enterFrom="opacity-0"
+//               enterTo="opacity-100"
+//               leave="ease-in duration-200"
+//               leaveFrom="opacity-100"
+//               leaveTo="opacity-0"
+//             >
+//               <div className="fixed inset-0 bg-black bg-opacity-25" />
+//             </Transition.Child>
+  
+//             <div className="fixed inset-0 overflow-y-auto">
+//               <div className="flex min-h-full items-center justify-center p-4 text-center">
+//                 <Transition.Child
+//                   as={Fragment}
+//                   enter="ease-out duration-300"
+//                   enterFrom="opacity-0 scale-95"
+//                   enterTo="opacity-100 scale-100"
+//                   leave="ease-in duration-200"
+//                   leaveFrom="opacity-100 scale-100"
+//                   leaveTo="opacity-0 scale-95"
+//                 >
+//                   <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+//                     <Dialog.Title
+//                       as="h3"
+//                       className="text-lg font-medium leading-6 text-gray-900 font-figtree"
+//                     >
+//                       {
+//                         verify.isIdle && 'Registration Fee'
+//                       }
+//                       { verify.isSuccess && "Payment Sucessful!"}
+//                       { verify.isLoading && "Please Wait!"}
+//                     </Dialog.Title>
+//                     <div className="mt-2">
+//                       {
+//                         verify.isIdle && (
+//                             <p className="text-sm font-figtree text-gray-500">
+//                               Registration fee of N1,500.00 is neccessary for continuation of usage of this platform. 
+  
+//                               Click the button and you will be redirected to a secured payment page.
+//                             </p>                        
+//                         )
+//                       }
+  
+//                       {
+//                         verify.isSuccess && (
+//                           <p className="text-sm text-center font-figtree text-gray-500">
+//                             <CheckBadgeIcon className="h-28 mx-auto text-green-500"/>
+//                           </p>
+//                         )
+//                       }
+  
+//                       {
+//                         verify.isLoading && (
+//                           <div className="flex">
+//                             <FontAwesomeIcon icon={faSpinner} spin className="text-pry text-5xl mx-auto"/>
+//                           </div>
+//                         )
+//                       }
+  
+//                     </div>
+  
+//                     <div className="mt-4">
+//                       {
+//                         verify.isIdle && (
+//                           <button
+//                             type="button"
+//                             className="inline-flex justify-center font-figtree rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+//                             onClick={() => initiate.mutate(body)}
+//                           >
+//                             { initiate.isLoading ? <FontAwesomeIcon icon={faSpinner} spin/> : "Pay Now"}
+//                           </button>
+//                             )
+//                       }
+//                       {
+//                         verify.isSuccess && (
+//                           <button
+//                         type="button"
+//                         className="inline-flex justify-center font-figtree rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+//                         onClick={() => setIsOpen(false)}
+//                       >
+//                         Close
+//                       </button>
+//                         )
+//                       }
+//                     </div>
+//                   </Dialog.Panel>
+//                 </Transition.Child>
+//               </div>
+//             </div>
+//           </Dialog>
+//         </Transition>
+//       </>
+//     )
+//   }
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-
-            <main>{children}</main>
-        </div>
+        <div className="relative grid sm:grid-cols-6 h">
+            <Sidebar 
+              navigation={navigation}
+              userNavigation={userNavigation}
+              logo={"/logo.png"}
+            />
+            {/* <MyModal/> */}
+            <div className="col-span-5 h-screen overflow-y-auto bg-gray-100 min-h-screen bg-blueGray-100">
+                  <DashboardHeader userNavigation={userNavigation} navigation={navigation}/>
+                {children}
+            </div>
+        </div>    
     );
 }
