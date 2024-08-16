@@ -123,4 +123,16 @@ class Events extends Controller
             return response($th->getMessage(), 401);
         }
     }
+
+    public function removeEvent(Request $req){
+        $req->validate([
+            "id" => 'required'
+        ]);
+
+        $event = ModelsEvents::find($req->id);
+
+        $event->delete();
+
+        return back();
+    }
 }

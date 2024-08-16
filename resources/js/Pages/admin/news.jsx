@@ -4,7 +4,7 @@ import NewsCard from '../../components/Cards/NewsCard'
 import DashboardTitle from '../../components/Header/DashboardTitle'
 import MyModal from '../../components/Modal/Modal'
 import { NewsButton, NewsForm } from '../dashboard/news'
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 
 const Index = ({ data:news }) => {
@@ -51,6 +51,10 @@ const Index = ({ data:news }) => {
     });
   };
 
+  const deleteNews = (id) => {
+    router.delete(route("delete.news"), { data : { id }});
+  }
+
   return (
     <Admin>
             <MyModal
@@ -80,14 +84,14 @@ const Index = ({ data:news }) => {
               {
                   news.map(({id, title, content, created_at, image, member : {firstName, lastName} }, index) => (
                     <NewsCard
-                    key={index}
-                    title={title}
-                    content={content}
-                    image={image}
-                    name={firstName+ ' ' +lastName}
-                    admin={true}
-                    created_at={created_at}
-                    deleteNews={() => deleteNews(id)}/>
+                      key={index}
+                      title={title}
+                      content={content}
+                      image={image}
+                      name={firstName+ ' ' +lastName}
+                      admin={true}
+                      created_at={created_at}
+                      deleteNews={() => deleteNews(id)}/>
                   ))
               }
           </section>

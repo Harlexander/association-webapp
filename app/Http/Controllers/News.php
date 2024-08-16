@@ -82,14 +82,14 @@ public function postNews(Request $request)
         }
     }
 
-    public function deleteNews(Request $request)
+    public function removeNews(Request $request)
     {
         try {
             $id = $request['id'];
             $news = ModelsNews::findOrFail($id);
             $news->delete();
 
-            return response('News deleted successfully', 200);
+            return back();
         } catch (\Throwable $th) {
             return response($th->getMessage(), 401);
         }

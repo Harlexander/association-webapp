@@ -5,9 +5,8 @@ const ImageContainer = ({src, caption}) => {
     <div>
       <img
       src={src}
-      style={{objectFit : "contain"}}
-      className="w-full md:h-80"/>
-      <p className='font-nunito'>
+      className="w-full md:h-80 object-cover"/>
+      <p className='font-nunito capitalize'>
         {caption}
       </p>
     </div>

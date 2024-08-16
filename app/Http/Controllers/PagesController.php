@@ -16,24 +16,30 @@ class PagesController extends Controller
         $data = Settings::find(1);
         $events = Events::get();
         $data->events = $events;
+        $gallery = GalleryCategory::with("images")->limit(6)->get();
+        $data->gallery = $gallery;
         return Inertia::render('Welcome', [ "data" => $data ]);
     }
-    public function about(){
-        $about = Settings::select("about")->first();
 
+    public function about(){
+        $about = Settings::select("about_us")->first();
         return Inertia::render("About", [
-            "about" => $about
+            "about" => $about['about_us']
         ]);
     }
+
     public function contact(){
         return Inertia::render("Contact");
     }
+
     public function mission(){
         return Inertia::render("Mission-vision");
     }
+
     public function events(){
         return Inertia::render("Events");
     }
+
     public function gallery(){
         $categories = GalleryCategory::with("images")->get();
 
@@ -41,6 +47,7 @@ class PagesController extends Controller
             "categories" => $categories
         ]);
     }
+
     public function galleryCat(Request $request, $category){
         $images = GalleryCategory::with('images')->find($category);
 

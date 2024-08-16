@@ -1,41 +1,69 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import moment from 'moment'
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
+import { router } from '@inertiajs/react'
+import { toast } from 'react-toastify'
 
 const MembersTable = ({admin, data, isLoading}) => {
   return (
-    <div className='bg-white min-h-[60vh] p-4 shadow-xl relative rounded-lg overflow-x-auto'>
-    <table className='table-responsive w-full divide-y'>
-        <thead className='font-manrope text-xs uppercase text-left'>
-            <tr>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>Member Id</th>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>Full Name</th>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>Email</th>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>Set</th>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>Reg. Date</th>
-                <th className='py-2 whitespace-nowrap pr-4 font-light'>State</th>
-                {
-                    admin && (
-                        <>
-                        <th className='py-2 whitespace-nowrap pr-4 font-light'></th>
-                        </>
-                    )
-                }
-            </tr>
-        </thead>
-        <tbody className='divide-y font-figtree text-xs'>
+    <Members
+  )
+}
+
+{/* <div className='bg-white min-h-[60vh] p-4 shadow-xl relative rounded-lg overflow-x-auto'>
+<table className='table-responsive w-full divide-y'>
+    <thead className='font-manrope text-xs uppercase text-left'>
+        <tr>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Member Id</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Full Name</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Email</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Status</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Set</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>Reg. Date</th>
+            <th className='py-2 whitespace-nowrap pr-4 font-light'>State</th>
             {
-                data.map((item, index) => (
+                admin && (
+                    <>
+                    <th className='py-2 whitespace-nowrap pr-4 font-light'></th>
+                    </>
+                )
+            }
+        </tr>
+    </thead>
+    <tbody className='divide-y font-figtree text-xs'>
+        {
+            data.map((item, index) => (
+                <tr className='' key={index}>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.member_id}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.firstName} {item.lastName}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.email}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.status}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.set}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{moment(item.created_at).format("Do MMM YYYY")}</td>
+                    <td className='py-4 whitespace-nowrap pr-4'>{item.city}</td>
+                    {
+                        admin && (
+                            <td className='py-4 whitespace-nowrap pr-4 cursor-pointer'>
+                                <Manage id={item.id} status={item.status}/>
+                            </td>
+                        )
+                    }
+                </tr>
+            ))
+        }
+        {
+            isLoading && (
+                Array(5).fill("").map((item, index) => (
                     <tr className='' key={index}>
-                        <td className='py-4 whitespace-nowrap pr-4'>{item.member_id}</td>
-                        <td className='py-4 whitespace-nowrap pr-4'>{item.firstName} {item.lastName}</td>
-                        <td className='py-4 whitespace-nowrap pr-4'>{item.email}</td>
-                        <td className='py-4 whitespace-nowrap pr-4'>{item.set}</td>
-                        <td className='py-4 whitespace-nowrap pr-4'>{moment(item.created_at).format("Do MMM YYYY")}</td>
-                        <td className='py-4 whitespace-nowrap pr-4'>{item.city}</td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
+                        <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
                         {
                             admin && (
                                 <td className='py-4 whitespace-nowrap pr-4 cursor-pointer'>
@@ -45,46 +73,37 @@ const MembersTable = ({admin, data, isLoading}) => {
                         }
                     </tr>
                 ))
-            }
-            {
-                isLoading && (
-                    Array(5).fill("").map((item, index) => (
-                        <tr className='' key={index}>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            <td className='py-4 whitespace-nowrap pr-4'><Skeleton/></td>
-                            {
-                                admin && (
-                                    <td className='py-4 whitespace-nowrap pr-4 cursor-pointer'>
-                                        <Manage/>
-                                    </td>
-                                )
-                            }
-                        </tr>
-                    ))
-                )
-            }
-        </tbody>
-    </table>
-</div>
-  )
-}
+            )
+        }
+    </tbody>
+</table>
+</div> */}
 
-function Manage() {
+
+function Manage({id, status}) {
+    const userStatus = (id, status) => {
+      router.put(route("user.status"), { id, status }, {
+        onSuccess: () => toast.success("User status updated!")
+      })
+    }
+
+    const deleteUser = (id) => {
+      router.delete(route("user.delete"), { data : { id } }, {
+        onSuccess: () => toast.success("User deleted successfully!")
+      })
+    }
+
     return (
       <div className="">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="z-10 inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-blue-500 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <MenuButton className="z-10 inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-blue-500 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               Manage
               <ChevronDownIcon
                 className="ml-2 -mr-1 h-5 w-5 text-blue-200 hover:text-blue-100"
                 aria-hidden="true"
               />
-            </Menu.Button>
+            </MenuButton>
           </div>
           <Transition
             as={Fragment}
@@ -95,11 +114,12 @@ function Manage() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <MenuItems className="absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
-                <Menu.Item>
+                <MenuItems>
                   {({ active }) => (
                     <button
+                     onClick={() => userStatus(id, status === "active" ? "suspended" : "active")}
                       className={`${
                         active ? 'bg-yellow-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -115,15 +135,16 @@ function Manage() {
                           aria-hidden="true"
                         />
                       )}
-                      Edit
+                      { status === "active" ? "Deactivate account" : "Activate account"}
                     </button>
                   )}
-                </Menu.Item>
+                </MenuItems>
               </div>
               <div className="px-1 py-1">
-                <Menu.Item>
+                <MenuItems>
                   {({ active }) => (
                     <button
+                      onClick={() => deleteUser(id)}
                       className={`${
                         active ? 'bg-yellow-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -142,9 +163,9 @@ function Manage() {
                       Delete
                     </button>
                   )}
-                </Menu.Item>
+                </MenuItems>
               </div>
-            </Menu.Items>
+            </MenuItems>
           </Transition>
         </Menu>
       </div>

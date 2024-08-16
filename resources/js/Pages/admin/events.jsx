@@ -8,7 +8,7 @@ import { set } from '../../lib/set';
 import { ScaleLoader } from 'react-spinners';
 import BadgeSuccess from '../../components/Badge/BadgeSuccess';
 import { AdminEventsTable } from '../../components/Tables/EventsTable';
-import { useForm } from '@inertiajs/react';  // Import useForm from Inertia
+import { router, useForm } from '@inertiajs/react';  // Import useForm from Inertia
 import { toast } from 'react-toastify';
 
 const Index = ({ events }) => {

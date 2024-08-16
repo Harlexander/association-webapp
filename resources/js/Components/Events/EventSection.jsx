@@ -63,7 +63,7 @@ console.log({events})
         
                         <p className='font-primary text-2xl' >{moment(event.date).format("dd, Do MMM YYYY")}</p>
         
-                        <div className='flex gap-3'>
+                        <div className='flex gap-3 hidden'>
                             <SolidButton
                             title={"Register"}
                             additionalClass={"font-primary w-full py-2 "}

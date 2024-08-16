@@ -1,9 +1,8 @@
 import { CalendarDaysIcon, UserIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import { imgHost } from '../../lib/imgHost'
 import moment from 'moment/moment'
 
-const NewsCard = ({admin, title, content, image, name, created_at, id, deleteNews}) => {
+const NewsCard = ({admin, title, content, image, name, created_at, deleteNews}) => {
   return (
     <div className='bg-white rounded-lg shadow flex-col flex'>
         <img src={image} alt="" className='rounded-t-lg w-full h-64 object-cover' />

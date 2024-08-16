@@ -33,4 +33,32 @@ class Members extends Controller
             return response($th->getMessage(), 401);
         }
     }
+
+    public function userStatus(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required'
+        ]);
+
+
+        $user = User::find($request->id);
+
+        
+        if($user){
+            $user->status = $request->status;
+            $user->save();
+        }
+
+        return back();
+    }
+
+    public function removeUser(Request $request){
+        $request->validate([
+            'id' => 'required'
+        ]);
+        $user = User::find($request->id);
+        $user->delete();
+        
+        return back();
+    }
 }

@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function(){
     Route::post('/admin/gallery/new', [SettingsController::class, 'newImage'])->name("new.image");
     Route::delete('/admin/gallery/image', [SettingsController::class, 'removeImage'])->name("delete.image");
     Route::post('/settings', [SettingsController::class, 'updateSettings'])->name("settings.update");
+    Route::delete('/admin/event/remove', [Events::class, 'removeEvent'])->name("delete.event");
+    Route::delete('/admin/news/remove', [News::class, 'removeNews'])->name("delete.news");
+    Route::put('/admin/user/status', [Members::class, 'userStatus'])->name("user.status");
+    Route::delete('/admin/user/remove', [Members::class, 'removeUser'])->name("user.delete");
 });
 
 Route::get('/event', [Events::class, 'getEvents']);

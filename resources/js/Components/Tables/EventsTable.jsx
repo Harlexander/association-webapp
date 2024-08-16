@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrinterIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Skeleton from 'react-loading-skeleton';
+import { router } from '@inertiajs/react';
 
 const EventsTable = ({data, isLoading}) => {
   return (
@@ -58,6 +59,11 @@ const EventsTable = ({data, isLoading}) => {
 export default EventsTable;
 
 export const AdminEventsTable = ({data = []}) => {
+
+    const removeEvent = (id) => {
+        router.delete(route("delete.event"), { data :  { id } });
+    }
+
     return (
       <div className='bg-white p-4 shadow-xl rounded-lg overflow-x-auto'>
           <table className='table-responsive w-full divide-y'>
@@ -69,13 +75,12 @@ export const AdminEventsTable = ({data = []}) => {
                       <th className='py-2 font-light pr-2'>Fee</th>
                       <th className='py-2 font-light pr-2'>Reg. Members</th>
                       <th className='py-2 font-light pr-2'>Date</th>
-                      <th className='py-2 font-light pr-2'>Report</th>
                       <th className='py-2 font-light pr-2'>Delete</th>
                   </tr>
               </thead>
               <tbody className='divide-y font-figtree text-sm'>
                   {
-                      data.map(({ event_id, title, date, reg_fee, set, registered_members }, index) => (
+                      data.map(({ event_id, title, date, reg_fee, set, registered_members, id }, index) => (
                           <tr className='' key={event_id}>
                               <td className='py-5 whitespace-nowrap pr-4'>{index+1}</td>
                               <td className='py-5 whitespace-nowrap pr-4'>{title}</td>
@@ -84,12 +89,7 @@ export const AdminEventsTable = ({data = []}) => {
                               <td className='py-5 whitespace-nowrap pr-4 capitalize'>{registered_members.length}</td>
                               <td className='py-5 whitespace-nowrap pr-4 capitalize'>{date}</td>
                               <td className='py-5 whitespace-nowrap pr-4'>
-                                  <button className='px-5 bg-green-500 rounded py-1'>
-                                    <PrinterIcon className="h-4 text-white"/>
-                                  </button>
-                              </td>
-                              <td className='py-5 whitespace-nowrap pr-4'>
-                                  <button className='px-5 bg-red-500 rounded py-1'>
+                                  <button onClick={() => removeEvent(id)} className='px-5 bg-red-500 rounded py-1'>
                                     <TrashIcon className="h-4 text-white"/>
                                   </button>
                               </td>
