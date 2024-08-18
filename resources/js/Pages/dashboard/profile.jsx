@@ -36,34 +36,15 @@ const Index = ({ auth: { user} }) => {
     return data;
    }
 
-  //  const { isLoading, data, error, mutate } = useMutation(async (file) => {
-  //   const { data } = await updateProfilePicture(file);
-
-  //   return data;
-  //  }, {
-  //   onSuccess : () => {
-  //     refetch();
-  //   }
-  //  });
-
    const closeModal = () => setIsOpen(!isOpen);
 
    const [formValues, setFormValues] = useState({
     
    });
-   
-  //  const editProfile = useMutation(async (values) => {
-  //      const { data } = await api.put("/user/update", values, { headers : { Authorization : `Bearer ${token}`}})
-  //      return data;
-  //    }, {
-  //      onSuccess : () => {
-  //       refetch();
-  //       }
-  //    });
- 
-     const handleSubmit = () => {
-       console.log(formValues);
-     }
+
+    const handleSubmit = () => {
+      console.log(formValues);
+    }
 
   return (
     <Authenticated>

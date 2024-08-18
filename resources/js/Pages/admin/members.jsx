@@ -11,9 +11,11 @@ const Index = ({ data }) => {
     const [ current, setCurrent ] = useState(1);
     const [ searchResult, setSearchResult ] = useState([]);
 
+    console.log(data);
+
     const search = (e) => {
         if(e.target.value.length > 0 ){
-            const result = searchByName(e.target.value, data.data);
+            const result = searchByName(e.target.value, data);
             setSearchResult(result);
         }else{
             setSearchResult([]);
@@ -23,7 +25,7 @@ const Index = ({ data }) => {
     const filter = (e) => {
         if(e.target.value.length > 0 ){
             console.log(e.target.value)
-            const result = filterBySet(e.target.value, data.data);
+            const result = filterBySet(e.target.value, data);
             setSearchResult(result);
         }else{
             setSearchResult([]);
@@ -68,9 +70,9 @@ const Index = ({ data }) => {
                 )
             }
 
-            <MembersTable data={data.data || []} isLoading={false} admin={true}/>
+            <MembersTable data={data} isLoading={false} admin={true}/>
 
-            <div className='font-figtree flex justify-between py-5'>
+            <div className='font-figtree justify-between py-5 hidden'>
                 <p className='bg-white px-4 py-2 rounded-lg'>Page {data.current_page} of {data.last_page}</p>
 
                 <div className='space-x-2'>

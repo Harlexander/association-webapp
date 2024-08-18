@@ -1,7 +1,8 @@
 import React from 'react'
-import PageHeader from '../../../components/Header/PageHeader'
-import IndexNavbar from '../../../Components/Navbar/Navbar'
 import { Link } from '@inertiajs/react'; 
+import IndexNavbar from '@/Components/Navbar/Navbar';
+import PageHeader from '@/Components/Header/PageHeader';
+
 const setReps = [
   {
     set : '1986',

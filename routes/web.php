@@ -17,7 +17,7 @@ use App\Models\Settings;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
 
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
@@ -91,6 +91,24 @@ Route::middleware('auth')->group(function(){
     Route::delete('/admin/news/remove', [News::class, 'removeNews'])->name("delete.news");
     Route::put('/admin/user/status', [Members::class, 'userStatus'])->name("user.status");
     Route::delete('/admin/user/remove', [Members::class, 'removeUser'])->name("user.delete");
+});
+
+Route::prefix("excos")->group(function(){
+    Route::get("/web-master", function(){
+        return Inertia::render('excos/web-master');
+    });
+    Route::get("/national-executives", function(){
+        return Inertia::render('excos/national-executives');
+    });
+    Route::get("/board-of-trustees", function(){
+        return Inertia::render('excos/board-of-trustees');
+    });
+    Route::get("/set-representative", function(){
+        return Inertia::render('excos/set-representative/index');
+    });
+    Route::get("/set-representative/{set}", function($set){
+        return Inertia::render('excos/set-representative/set', ['set' => $set]);
+    });
 });
 
 Route::get('/event', [Events::class, 'getEvents']);

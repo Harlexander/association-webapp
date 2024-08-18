@@ -9,11 +9,7 @@ import { toast } from 'react-toastify'
 
 const MembersTable = ({admin, data, isLoading}) => {
   return (
-    <Members
-  )
-}
-
-{/* <div className='bg-white min-h-[60vh] p-4 shadow-xl relative rounded-lg overflow-x-auto'>
+<div className='bg-white min-h-[60vh] p-4 shadow-xl relative rounded-lg overflow-x-auto'>
 <table className='table-responsive w-full divide-y'>
     <thead className='font-manrope text-xs uppercase text-left'>
         <tr>
@@ -24,7 +20,7 @@ const MembersTable = ({admin, data, isLoading}) => {
             <th className='py-2 whitespace-nowrap pr-4 font-light'>Set</th>
             <th className='py-2 whitespace-nowrap pr-4 font-light'>Reg. Date</th>
             <th className='py-2 whitespace-nowrap pr-4 font-light'>State</th>
-            {
+            { 
                 admin && (
                     <>
                     <th className='py-2 whitespace-nowrap pr-4 font-light'></th>
@@ -77,7 +73,9 @@ const MembersTable = ({admin, data, isLoading}) => {
         }
     </tbody>
 </table>
-</div> */}
+</div> 
+  )
+}
 
 
 function Manage({id, status}) {

@@ -17,7 +17,7 @@ const Index = ({ data, activePayments }) => {
             subtitle={"Manage your subscription,dues and payments. Initiate payments conveniently."}/>
 
           <section>
-            <ActivePaymentCard data={[]} loading={false}/>
+            <ActivePaymentCard data={activePayments} loading={false}/>
           </section>
 
           <section>

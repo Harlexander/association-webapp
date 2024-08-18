@@ -69,7 +69,7 @@ export default Index;
 const UpcomingEvents = ({title, description, image, date, reg_fee, register, loading, clicked}) => (
   <div className='bg-white flex gap-4 justify-between flex-col flex-shrink-0 shadow-lg p-4 w-64 rounded-lg'>
       <div className='space-y-3 '>
-        <img src={imgHost+image} className='w-full sm:h-40 object-cover rounded'/>
+        <img src={"/public/"+image} className='w-full sm:h-40 object-cover rounded'/>
         <p className='font-manrope font-bold'>{title}</p>
         <p className='font-figtree text-xs'>{description}</p>
     

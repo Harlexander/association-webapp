@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ActivePaymentCard = ({data, loading, admin}) => {
- 
+
   return (
     <div className='bg-white rounded-lg p-4 shadow-lg space-y-4'>
         <p className='font-manrope font-semibold'>Active Payments</p>
@@ -30,12 +30,12 @@ const ActivePaymentCard = ({data, loading, admin}) => {
                     <td className='py-2 px-3 whitespace-nowrap'>
                       {
                         !admin && (
-                        <button disabled={loading} onClick={() => console.log({ 
+                        <button disabled={loading} onClick={() =>{ alert("Payment Disabled"); console.log({ 
                             amount : amount, 
                             purpose : title, 
                             callback_url : url,
                             payment_id : payment_id
-                          })} className='bg-blue-500 p-2 text-xs rounded text-white'>{initiate.isLoading ? (<FontAwesomeIcon icon={faSpinner} spin/>) : ("Pay Now")}</button>
+                          })}} className='bg-blue-500 p-2 text-xs rounded text-white'>{false ? (<FontAwesomeIcon icon={faSpinner} spin/>) : ("Pay Now")}</button>
                         )
                       }
                       {

@@ -4,13 +4,22 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { set } from '@/lib/set';
+
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         password_confirmation: '',
+        set: '',
+        profession: '',
+        city: '',
+        state: '',
+        country: '',
+        mobile: '',
     });
 
     const submit = (e) => {
@@ -27,20 +36,36 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="firstName" value="First Name" />
 
                     <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
+                        id="firstName"
+                        name="firstName"
+                        value={data.firstName}
                         className="mt-1 block w-full"
-                        autoComplete="name"
+                        autoComplete="given-name"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData('firstName', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.firstName} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="lastName" value="Last Name" />
+
+                    <TextInput
+                        id="lastName"
+                        name="lastName"
+                        value={data.lastName}
+                        className="mt-1 block w-full"
+                        autoComplete="family-name"
+                        onChange={(e) => setData('lastName', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.lastName} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -52,7 +77,7 @@ export default function Register() {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="email"
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
@@ -92,6 +117,96 @@ export default function Register() {
                     />
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="set" value="Set" />
+
+                    <select 
+                        value={data.set}
+                        name="set"
+                        onChange={(e) => setData('set', e.target.value)}
+                        required
+                        className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full'}>
+                        {
+                            set.map((set) => (
+                                <option key={set} value={set}>{set}</option>
+                            ))
+                        }
+                    </select>
+
+                    <InputError message={errors.set} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="profession" value="Profession" />
+
+                    <TextInput
+                        id="profession"
+                        name="profession"
+                        value={data.profession}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('profession', e.target.value)}
+                    />
+
+                    <InputError message={errors.profession} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="city" value="City" />
+
+                    <TextInput
+                        id="city"
+                        name="city"
+                        value={data.city}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('city', e.target.value)}
+                    />
+
+                    <InputError message={errors.city} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="state" value="State" />
+
+                    <TextInput
+                        id="state"
+                        name="state"
+                        value={data.state}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('state', e.target.value)}
+                    />
+
+                    <InputError message={errors.state} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="country" value="Country" />
+
+                    <TextInput
+                        id="country"
+                        name="country"
+                        value={data.country}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('country', e.target.value)}
+                    />
+
+                    <InputError message={errors.country} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="mobile" value="Mobile" />
+
+                    <TextInput
+                        id="mobile"
+                        name="mobile"
+                        value={data.mobile}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('mobile', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.mobile} className="mt-2" />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

@@ -113,7 +113,7 @@ const DashboardHeader = ({navigation, userNavigation}) => {
           <div className="border-t border-gray-700 pt-4 pb-3">
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
-                <img className="h-10 w-10 rounded-full" src={current_user.imageUrl} alt="" />
+                <img className="h-10 w-10 rounded-full" src={"/public/"+current_user.imageUrl} alt="" />
               </div>
               <div className="ml-3">
                 <div className="text-base font-medium leading-none text-white">{current_user.name}</div>

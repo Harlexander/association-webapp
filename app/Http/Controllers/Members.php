@@ -23,7 +23,7 @@ class Members extends Controller
     }
     public function adminMembers(){
         try {
-            $members = User::latest()->paginate(10);
+            $members = User::latest()->get();
 
             return Inertia::render("admin/members", [
                 "data" => $members

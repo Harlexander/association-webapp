@@ -21,7 +21,7 @@ console.log({events})
                   className='md:grid grid-cols-5 gap-10 sm:px-16 px-5'>
                     <div className="col-span-2 md:h-full md:w-full relative">
                             <div className='h-full md:flex items-center'>
-                                <img className="shadow-lg"  src={`${event.image}`}/>  
+                                <img className="shadow-lg"  src={"/public/"+`${event.image}`}/>  
                             </div>
                     </div>
         

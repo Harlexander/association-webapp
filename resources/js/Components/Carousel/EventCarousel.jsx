@@ -1,9 +1,6 @@
 import Carousel from 'better-react-carousel'
 import React from 'react'
-import { OutlineButton, SolidButton } from '../Button/Button'
 import { useCountdown } from '../countdown/countdown'
-import moment from 'moment'
-import { imgHost } from '../../lib/imgHost'
 
 const EventCarousel = ({events = []}) => {
     const { days, minutes, hours, seconds } = useCountdown("Dec 28, 2024")    

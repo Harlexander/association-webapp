@@ -72,7 +72,7 @@ export default Index
 export const ContestantCard = ({contestant}) => {
   return(
     <div className='border p-2 divide-y shrink-0'>
-      <img src={imgHost+contestant?.image} alt="img" className='h-52 w-52 object-contain' />
+      <img src={"/public/"+contestant?.image} alt="img" className='h-52 w-52 object-contain' />
       <p className='font-figtree font-semibold py-2'>{contestant?.firstName} {contestant?.lastName}</p>
       <Link href={`/election/${contestant?.id}`}>
         <button className='w-full bg-[#800000] font-figtree text-white text-xs py-2'>View Profile</button>

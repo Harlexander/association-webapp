@@ -1,9 +1,7 @@
 import React from 'react'
-import ExecutiveContainer from '../../components/Excos/ExecutiveContainer'
-import PageHeader from '../../components/Header/PageHeader'
-import UnderConstruction from '../../components/Header/UnderConstruction'
-import IndexNavbar from '../../Components/Navbar/Navbar'
-
+import IndexNavbar from '@/Components/Navbar/Navbar'
+import PageHeader from '@/Components/Header/PageHeader'
+import ExecutiveContainer from '@/Components/Excos/ExecutiveContainer';
 
 export const executiveData = [
   {

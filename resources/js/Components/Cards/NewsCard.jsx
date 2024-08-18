@@ -5,7 +5,7 @@ import moment from 'moment/moment'
 const NewsCard = ({admin, title, content, image, name, created_at, deleteNews}) => {
   return (
     <div className='bg-white rounded-lg shadow flex-col flex'>
-        <img src={image} alt="" className='rounded-t-lg w-full h-64 object-cover' />
+        <img src={"/public/"+image} alt="" className='rounded-t-lg w-full h-64 object-cover' />
 
         <div className='p-4 rounded z-20 grow flex flex-col gap-5'>
             <p className='font-manrope font-semibold text-lg'>{title}</p>

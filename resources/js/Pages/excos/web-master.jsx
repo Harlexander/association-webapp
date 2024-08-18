@@ -1,9 +1,8 @@
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import PageHeader from '../../components/Header/PageHeader'
-import UnderConstruction from '../../components/Header/UnderConstruction'
-import IndexNavbar from '../../Components/Navbar/Navbar'
+import IndexNavbar from '@/Components/Navbar/Navbar'
+import PageHeader from '@/Components/Header/PageHeader'
 
 const Index = () => {
   return (
